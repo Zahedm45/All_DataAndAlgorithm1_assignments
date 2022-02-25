@@ -40,7 +40,7 @@ public class Assignment1 {
 
 
 
-        for (int i = initialStrength; i > 0; i--) {
+        for (int i = 1; i < initialStrength; i++) {
 
             int initJumps = isPossible(arr, i);
             if (initJumps == jumps) {
@@ -68,23 +68,42 @@ public class Assignment1 {
 
     private int isPossible(int[] arr, int strength) {
         int heightAndStrength = arr[0] + strength;
-        int jumps = 0;
+        A last = new A(1, arr[0]);
+        int jumpCounter = 0;
 
-        for (int i = 1; i < arr.length; i++) {
-            //int currValue = arr[i];
-            if ( (heightAndStrength < arr[i] || i == arr.length -1) && ((i+strength) >= arr[i]) ) {
-                heightAndStrength = arr[i-1] + strength;
-                jumps++;
+        for (int j = 1; j < arr.length; j++) {
 
+            int i = last.index;
+            int hi = last.height;
+            int hj = arr[j];
+
+
+
+            if ( (i + strength >= j+1) && (hi+strength >= hj)) {
+
+                if (j == arr.length-1) {
+                    last = new A(j+1, hj);
+                    jumpCounter++;
+
+                } else if ( !(i + strength >= j+2) || !(hi+strength >= arr[j+1])) {
+
+                    last = new A(j+1, hj);
+                    jumpCounter++;
+
+                }
             }
-
-            /*else if (i == arr.length -1) {
-                heightAndStrength = arr[i-1] + strength;
-                jumps++;
-            }*/
         }
 
-        return jumps;
+        return jumpCounter;
     }
+}
 
+
+class A {
+    int index;
+    int height;
+    public A(int index, int height) {
+        this.index = index;
+        this.height = height;
+    }
 }
