@@ -5,10 +5,11 @@ import java.util.StringTokenizer;
 
 public class Assignment1 {
 
-    int jumps;
+    int jumps, counter;
     public static void main(String[] args) throws IOException {
         new Assignment1().run();
     }
+
 
 
     private void run() throws IOException {
@@ -35,7 +36,8 @@ public class Assignment1 {
 
 
     private void any(int[] arr, int lowStrength, int topStrength) {
-
+        counter++;
+        System.out.println(counter);
         int mid = (lowStrength + topStrength) / 2;
 
 
@@ -53,8 +55,12 @@ public class Assignment1 {
                 }
             }
 
-        } else if ((initJumps > jumps)) {
-            any(arr, mid-1, topStrength);
+        } else if (initJumps > jumps) {
+            any(arr, mid+1, topStrength);
+
+        } else if ( initJumps == 0) {
+            any(arr, mid+1, topStrength);
+
 
         } else {
             any(arr, lowStrength, mid-1);
