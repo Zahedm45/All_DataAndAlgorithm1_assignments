@@ -24,50 +24,49 @@ public class Assignment1 {
 
 
         for (int i = 0; i < n; i++) {
-
             String s = st.nextToken();
             arr[i] = Integer.parseInt(s);
         }
 
 
-
-
         int initialStrength = arr[arr.length-1];
-        any(arr, initialStrength);
+        any(arr, 1, initialStrength);
     }
 
-    private void any(int[] arr, int initialStrength) {
+
+    private void any(int[] arr, int lowStrength, int topStrength) {
+
+        int mid = (lowStrength + topStrength) / 2;
 
 
+        int initJumps = isPossible(arr, mid);
 
-        for (int i = 1; i < initialStrength; i++) {
+        if (initJumps == jumps) {
 
-            int initJumps = isPossible(arr, i);
-            if (initJumps == jumps) {
-                System.out.println(i);
-                return;
+            for (int i = mid; i > (mid-100); i--) {
+
+                if (isPossible(arr, i) == jumps) {
+                    if (isPossible(arr, i-1) != jumps) {
+                        System.out.println(i);
+                        return;
+                    }
+                }
             }
-        }
+
+        } else if ((initJumps < jumps)) {
+            any(arr, lowStrength, mid-1);
 
 
-/*        if (initJumps == jumps) {
-            System.out.println(initialStrength);
-            return;
-
-        } else if (initJumps < jumps) {
-            initialStrength = initialStrength / 2;
-            any(arr, initialStrength);
 
         } else {
-            initialStrength = initialStrength + (initialStrength / 2);
-            any(arr, initialStrength);
-        }*/
+            any(arr, mid-1, topStrength);
 
-
+        }
     }
 
+
     private int isPossible(int[] arr, int strength) {
-        int heightAndStrength = arr[0] + strength;
+//        int heightAndStrength = arr[0] + strength;
         A last = new A(1, arr[0]);
         int jumpCounter = 0;
 
