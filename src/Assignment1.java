@@ -53,13 +53,11 @@ public class Assignment1 {
                 }
             }
 
-        } else if ((initJumps < jumps)) {
-            any(arr, lowStrength, mid-1);
-
-
+        } else if ((initJumps > jumps)) {
+            any(arr, mid-1, topStrength);
 
         } else {
-            any(arr, mid-1, topStrength);
+            any(arr, lowStrength, mid-1);
 
         }
     }
