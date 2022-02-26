@@ -72,19 +72,36 @@ public class Assignment1 {
 
     private int isPossible(int[] arr, int strength) {
 //        int heightAndStrength = arr[0] + strength;
-        A last = new A(1, arr[0]);
         int jumpCounter = 0;
+
+
+        A last = new A(1, arr[0]);
+        int i = last.index;
+        int hi = last.height;
 
         for (int j = 1; j < arr.length; j++) {
 
-            int i = last.index;
-            int hi = last.height;
             int hj = arr[j];
 
 
-            if ( (i + strength >= j+1) && (hi+strength >= hj)) {
+            if ( (i + strength >= j+1) && (hi+strength >= hj) ) {
+
 
                 if (j == arr.length-1) {
+                     jumpCounter++;
+                     return jumpCounter;
+
+                } else if ( !(i + strength >= j+2) || !(hi + strength >= arr[j+1]) ) {
+
+                    last = new A(j+1, hj);
+                    i = last.index;
+                    hi = last.height;
+                    jumpCounter++;
+                }
+
+
+
+/*                if (j == arr.length-1) {
                     last = new A(j+1, hj);
                     jumpCounter++;
 
@@ -93,7 +110,7 @@ public class Assignment1 {
                     last = new A(j+1, hj);
                     jumpCounter++;
 
-                }
+                }*/
 
             } else {
                 return 0;
