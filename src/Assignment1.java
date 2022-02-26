@@ -38,7 +38,8 @@ public class Assignment1 {
 
     private void any(int[] arr, int lowStrength, int topStrength) {
         counter++;
-        int mid = ((topStrength - lowStrength ) / 2) + lowStrength;
+//        int mid = ((topStrength - lowStrength ) / 2) + lowStrength;
+        int mid = (topStrength + lowStrength ) / 2;
 
 
         int initJumps = isPossible(arr, mid);
@@ -67,12 +68,11 @@ public class Assignment1 {
             }*/
 
 
-        } else if (initJumps > jumps) {
+        } else if (initJumps == 0) {
             any(arr, mid+1, topStrength);
 
-        } else if ( initJumps == 0) {
+        } else if ( initJumps > jumps) {
             any(arr, mid+1, topStrength);
-
 
         } else {
             any(arr, lowStrength, mid-1);
