@@ -32,13 +32,12 @@ public class Assignment1 {
 
 
         int initialStrength = arr[arr.length-1];
-        any(arr, 1, initialStrength);
+        any(arr, 0, initialStrength);
     }
 
 
     private void any(int[] arr, int lowStrength, int topStrength) {
         counter++;
-//        System.out.println(counter);
         int mid = (int) (((lowStrength + topStrength) / 2) + 0.5);
 
 
