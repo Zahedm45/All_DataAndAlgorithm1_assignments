@@ -31,20 +31,20 @@ public class Assignment1 {
         }
 
 
-        int initialStrength = arr[arr.length-1];
-        any(arr, 0, initialStrength);
+//        int initialStrength = arr[arr.length-1];
+        any(arr, 0, arr.length-1);
     }
 
 
     private void any(int[] arr, int lowStrength, int topStrength) {
         counter++;
-        int mid = (int) (((lowStrength + topStrength) / 2) + 0.5);
+        int mid = ((topStrength - lowStrength ) / 2) + lowStrength;
 
 
         int initJumps = isPossible(arr, mid);
 
         if (initJumps == jumps) {
-            System.out.println("hello sir");
+
             for (int i = mid; i > (mid-100); i--) {
 
                 if (isPossible(arr, i) == jumps) {
@@ -82,19 +82,14 @@ public class Assignment1 {
 
 
     private int isPossible(int[] arr, int strength) {
-//        int heightAndStrength = arr[0] + strength;
         int jumpCounter = 0;
-
 
         A last = new A(1, arr[0]);
         int i = last.index;
         int hi = last.height;
 
         for (int j = 1; j < arr.length; j++) {
-
             int hj = arr[j];
-
-
             if ( (i + strength >= j+1) && (hi+strength >= hj) ) {
 
 
@@ -109,19 +104,6 @@ public class Assignment1 {
                     hi = last.height;
                     jumpCounter++;
                 }
-
-
-
-/*                if (j == arr.length-1) {
-                    last = new A(j+1, hj);
-                    jumpCounter++;
-
-                } else if ( !(i + strength >= j+2) || !(hi+strength >= arr[j+1])) {
-
-                    last = new A(j+1, hj);
-                    jumpCounter++;
-
-                }*/
 
             } else {
                 return 0;
@@ -141,3 +123,22 @@ class A {
         this.height = height;
     }
 }
+
+
+
+
+
+
+
+
+
+/*                if (j == arr.length-1) {
+                    last = new A(j+1, hj);
+                    jumpCounter++;
+
+                } else if ( !(i + strength >= j+2) || !(hi+strength >= arr[j+1])) {
+
+                    last = new A(j+1, hj);
+                    jumpCounter++;
+
+                }*/
