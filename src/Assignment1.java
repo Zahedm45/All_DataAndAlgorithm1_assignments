@@ -39,7 +39,7 @@ public class Assignment1 {
     private void any(int[] arr, int lowStrength, int topStrength) {
         counter++;
 //        System.out.println(counter);
-        int mid = (lowStrength + topStrength) / 2;
+        int mid = (int) (((lowStrength + topStrength) / 2) + 0.5);
 
 
         int initJumps = isPossible(arr, mid);
