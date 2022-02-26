@@ -1,6 +1,7 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.lang.constant.Constable;
 import java.util.StringTokenizer;
 
 public class Assignment1 {
@@ -37,7 +38,7 @@ public class Assignment1 {
 
     private void any(int[] arr, int lowStrength, int topStrength) {
         counter++;
-        System.out.println(counter);
+//        System.out.println(counter);
         int mid = (lowStrength + topStrength) / 2;
 
 
@@ -81,7 +82,6 @@ public class Assignment1 {
             int hj = arr[j];
 
 
-
             if ( (i + strength >= j+1) && (hi+strength >= hj)) {
 
                 if (j == arr.length-1) {
@@ -94,6 +94,9 @@ public class Assignment1 {
                     jumpCounter++;
 
                 }
+
+            } else {
+                return 0;
             }
         }
 
