@@ -44,7 +44,7 @@ public class Assignment1 {
         int initJumps = isPossible(arr, mid);
 
         if (initJumps == jumps) {
-
+            System.out.println("hello sir");
             for (int i = mid; i > (mid-100); i--) {
 
                 if (isPossible(arr, i) == jumps) {
@@ -54,6 +54,18 @@ public class Assignment1 {
                     }
                 }
             }
+
+
+/*            for (int i = mid; i < (mid+500); i++) {
+
+                if (isPossible(arr, i) == jumps) {
+                    if (isPossible(arr, i+1) != jumps) {
+                        System.out.println(i);
+                        return;
+                    }
+                }
+            }*/
+
 
         } else if (initJumps > jumps) {
             any(arr, mid+1, topStrength);
