@@ -20,8 +20,10 @@ public class Assignment1 {
         jumps = Integer.parseInt(str[1]);
 
 
+
         int[] arr = new int[n];
         StringTokenizer st = new StringTokenizer(in.readLine());
+
 
 
         for (int i = 0; i < n; i++) {
@@ -31,7 +33,24 @@ public class Assignment1 {
 
 
         int initialStrength = arr[arr.length-1];
-        any(arr, 1, initialStrength, 0);
+
+        if (arr.length == 2) {
+            int i = arr[1] - arr[0];
+            if ( i == 0) {
+                i = 1;
+            }
+            System.out.println(i);
+        } else {
+            any(arr, 1, initialStrength, 0);
+        }
+
+        System.out.println();
+        System.out.println(n + " " + jumps);
+        for (int i : arr) {
+            System.out.print(i + " ");
+
+        }
+
     }
 
     NodeB lastResult;
@@ -42,7 +61,7 @@ public class Assignment1 {
 
 
         int initJumps = isPossible(arr, mid);
-//        System.out.println("jumps: " + initJumps + ", top: " + topStrength + ", low: " + lowStrength + ", mid: " + mid);
+        System.out.println("jumps: " + initJumps + ", top: " + topStrength + ", low: " + lowStrength + ", mid: " + mid);
 
 
         if (zeroCounter > 10) {
