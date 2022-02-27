@@ -55,7 +55,8 @@ public class Assignment1 {
 
     NodeB lastResult;
 
-    private void any(int[] arr, int lowStrength, int topStrength, int zeroCounter, int lastMid) {
+
+    private void any(int[] arr, int lowStrength, int topStrength, int sameMidCounter, int lastMid) {
 //        System.out.println(counter);
         int mid = (int) (((lowStrength + topStrength) / 2) + 0.5);
 
@@ -64,16 +65,16 @@ public class Assignment1 {
         System.out.println("jumps: " + initJumps + ", top: " + topStrength + ", low: " + lowStrength + ", mid: " + mid);
 
         if (lastMid == mid) {
-            zeroCounter++;
-            System.out.println(zeroCounter);
+            sameMidCounter++;
+//            System.out.println(sameMidCounter);
         } else {
             lastResult = new NodeB(initJumps, lastMid);
-            zeroCounter = 0;
+            sameMidCounter = 0;
         }
 
         lastMid = mid;
 
-        if (zeroCounter > 10) {
+        if (sameMidCounter > 10) {
             System.out.println(lastResult.strength);
             return;
         }
@@ -92,18 +93,18 @@ public class Assignment1 {
 
         } else if (initJumps > jumps) {
 /*            lastResult = new NodeB(initJumps, mid);
-            zeroCounter = 0;*/
-            any(arr, mid+1, topStrength, zeroCounter, lastMid);
+            sameMidCounter = 0;*/
+            any(arr, mid+1, topStrength, sameMidCounter, lastMid);
 
         } else if ( initJumps == 0) {
-           // zeroCounter++;
-            any(arr, mid+1, topStrength, zeroCounter, lastMid);
+           // sameMidCounter++;
+            any(arr, mid+1, topStrength, sameMidCounter, lastMid);
 
 
         } else {
  //           lastResult = new NodeB(initJumps, mid);
-         //   zeroCounter = 0;
-            any(arr, lowStrength, mid-1, zeroCounter, lastMid);
+         //   sameMidCounter = 0;
+            any(arr, lowStrength, mid-1, sameMidCounter, lastMid);
 
         }
     }
