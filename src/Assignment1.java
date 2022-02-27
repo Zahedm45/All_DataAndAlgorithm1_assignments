@@ -104,8 +104,6 @@ public class Assignment1 {
         for (int j = 1; j < arr.length; j++) {
 
             int hj = arr[j];
-
-
             if ( ( i + strength >= j+1) && (hi+strength >= hj) ) {
 
                 if (j == arr.length-1) {
