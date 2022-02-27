@@ -28,7 +28,7 @@ public class Assignment1 {
             arr[i] = Integer.parseInt(s);
         }
 
-
+        // start with an initial(estimated) strength(S).
         int initialStrength = arr[arr.length-1];
         if (arr.length == 2) {
             int i = arr[1] - arr[0];
@@ -39,14 +39,14 @@ public class Assignment1 {
         } else {
 
             NodeB sameMid = new NodeB(0, 0);
-            any(arr, 1, initialStrength, sameMid);
+            findTheStrength(arr, 1, initialStrength, sameMid);
         }
     }
 
 
 
-
-    private void any(int[] arr, int lowStrength, int topStrength, NodeB sameResult) {
+// a binary search is implemented in this methode
+    private void findTheStrength(int[] arr, int lowStrength, int topStrength, NodeB sameResult) {
         int mid = (int) (((lowStrength + topStrength) / 2) + 0.5);
 
 
@@ -68,17 +68,18 @@ public class Assignment1 {
             printOutThePreciseStrength(arr, mid);
 
         } else if (initJumps > jumps) {
-            any(arr, mid+1, topStrength, sameResult);
+            findTheStrength(arr, mid+1, topStrength, sameResult);
 
         } else if ( initJumps == 0) {
-            any(arr, mid+1, topStrength, sameResult);
+            findTheStrength(arr, mid+1, topStrength, sameResult);
 
         } else {
-            any(arr, lowStrength, mid-1, sameResult);
+            findTheStrength(arr, lowStrength, mid-1, sameResult);
 
         }
     }
 
+    // just to check if the desired jump is achievable with less strength(S)
     private void printOutThePreciseStrength(int [] arr, int mid) {
         for (int i = mid; i > (mid-100); i--) {
 
@@ -91,6 +92,8 @@ public class Assignment1 {
         }
     }
 
+
+    // A linear searching algorithm is implement to find the path with the given strength(S)
     private int getJumps(int[] arr, int strength) {
         int jumpCounter = 0;
 
@@ -104,7 +107,6 @@ public class Assignment1 {
 
 
             if ( ( i + strength >= j+1) && (hi+strength >= hj) ) {
-
 
                 if (j == arr.length-1) {
                      jumpCounter++;
