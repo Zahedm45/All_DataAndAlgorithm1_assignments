@@ -41,7 +41,12 @@ public class Assignment1 {
             }
             System.out.println(i);
         } else {
-            any(arr, 1, initialStrength, 0, 0);
+
+            NodeB sameZero = new NodeB(0, 0);
+            NodeB sameMid = new NodeB(0, 0);
+
+
+            any(arr, 1, initialStrength, sameZero, sameMid);
         }
 
 /*        System.out.println();
@@ -53,10 +58,10 @@ public class Assignment1 {
 
     }
 
-    NodeB lastResult;
 
 
-    private void any(int[] arr, int lowStrength, int topStrength, int sameMidCounter, int lastMid) {
+
+    private void any(int[] arr, int lowStrength, int topStrength, NodeB sameZero, NodeB sameMid) {
 //        System.out.println(counter);
         int mid = (int) (((lowStrength + topStrength) / 2) + 0.5);
 
@@ -64,20 +69,22 @@ public class Assignment1 {
         int initJumps = isPossible(arr, mid);
         System.out.println("jumps: " + initJumps + ", top: " + topStrength + ", low: " + lowStrength + ", mid: " + mid);
 
-        if (lastMid == mid) {
-            sameMidCounter++;
-//            System.out.println(sameMidCounter);
+        if (mid == sameMid.lastMid) {
+            sameMid.counter++;
+            if (sameMid.counter > 9) {
+                System.out.println(sameMid.lastMid +1);
+                return;
+            }
+
         } else {
-            lastResult = new NodeB(initJumps, lastMid);
-            sameMidCounter = 0;
+            sameMid = new NodeB(0, mid);
         }
 
-        lastMid = mid;
 
-        if (sameMidCounter > 10) {
+/*        if (sameMidCounter > 10) {
             System.out.println(lastResult.strength);
             return;
-        }
+        }*/
 
         if (initJumps == jumps) {
 
@@ -94,17 +101,17 @@ public class Assignment1 {
         } else if (initJumps > jumps) {
 /*            lastResult = new NodeB(initJumps, mid);
             sameMidCounter = 0;*/
-            any(arr, mid+1, topStrength, sameMidCounter, lastMid);
+            any(arr, mid+1, topStrength, sameZero, sameMid);
 
         } else if ( initJumps == 0) {
            // sameMidCounter++;
-            any(arr, mid+1, topStrength, sameMidCounter, lastMid);
+            any(arr, mid+1, topStrength, sameZero, sameMid);
 
 
         } else {
  //           lastResult = new NodeB(initJumps, mid);
          //   sameMidCounter = 0;
-            any(arr, lowStrength, mid-1, sameMidCounter, lastMid);
+            any(arr, lowStrength, mid-1, sameZero, sameMid);
 
         }
     }
@@ -178,12 +185,13 @@ class NodeA {
 
 
 class NodeB{
-    int jumps, strength;
-    public NodeB(int jumps, int strength) {
-        this.jumps = jumps;
-        this.strength = strength;
+    int counter, lastMid;
+    public NodeB(int counter, int lastMid) {
+        this.counter = counter;
+        this.lastMid = lastMid;
     }
 }
+
 
 
 
