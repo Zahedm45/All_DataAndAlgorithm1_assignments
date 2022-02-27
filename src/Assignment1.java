@@ -67,9 +67,9 @@ public class Assignment1 {
 
 
         int initJumps = isPossible(arr, mid);
-        System.out.println("jumps: " + initJumps + ", top: " + topStrength + ", low: " + lowStrength + ", mid: " + mid);
+//        System.out.println("jumps: " + initJumps + ", top: " + topStrength + ", low: " + lowStrength + ", mid: " + mid);
 
-        if (mid == sameMid.lastMid) {
+/*        if (mid == sameMid.lastMid) {
             sameMid.counter++;
             if (sameMid.counter > 9) {
                 System.out.println(sameMid.lastMid +1);
@@ -78,13 +78,18 @@ public class Assignment1 {
 
         } else {
             sameMid = new NodeB(0, mid);
-        }
-
-
-/*        if (sameMidCounter > 10) {
-            System.out.println(lastResult.strength);
-            return;
         }*/
+
+        if (initJumps == sameMid.lastMid) {
+            sameMid.counter++;
+
+            if (sameMid.counter > 9) {
+                System.out.println(mid + 1);
+                return;
+            }
+        } else {
+            sameMid = new NodeB(0, initJumps);
+        }
 
         if (initJumps == jumps) {
 
@@ -99,18 +104,13 @@ public class Assignment1 {
             }
 
         } else if (initJumps > jumps) {
-/*            lastResult = new NodeB(initJumps, mid);
-            sameMidCounter = 0;*/
             any(arr, mid+1, topStrength, sameZero, sameMid);
 
         } else if ( initJumps == 0) {
-           // sameMidCounter++;
             any(arr, mid+1, topStrength, sameZero, sameMid);
 
 
         } else {
- //           lastResult = new NodeB(initJumps, mid);
-         //   sameMidCounter = 0;
             any(arr, lowStrength, mid-1, sameZero, sameMid);
 
         }
@@ -118,9 +118,7 @@ public class Assignment1 {
 
 
     private int isPossible(int[] arr, int strength) {
-//        int heightAndStrength = arr[0] + strength;
         int jumpCounter = 0;
-
 
         NodeA lastNode = new NodeA(1, arr[0]);
         int i = lastNode.index;
@@ -139,27 +137,13 @@ public class Assignment1 {
                      return jumpCounter;
 
                 } else if ( ( i + strength >= j+2) && (hi+strength >= arr[j+1]) ) {
-
+                    // do nothing...
                 } else {
-
                     lastNode = new NodeA(j+1, hj);
                     i = lastNode.index;
                     hi = lastNode.height;
                     jumpCounter++;
                 }
-
-
-
-/*                if (j == arr.length-1) {
-                    lastNode = new A(j+1, hj);
-                    jumpCounter++;
-
-                } else if ( !(i + strength >= j+2) || !(hi+strength >= arr[j+1])) {
-
-                    lastNode = new A(j+1, hj);
-                    jumpCounter++;
-
-                }*/
 
             } else {
                 return 0;
@@ -192,14 +176,3 @@ class NodeB{
     }
 }
 
-
-
-
-/*
-else if ( !(i + strength >= j+2) || !(hi + strength >= arr[j+1]) ) {
-
-        last = new A(j+1, hj);
-        i = last.index;
-        hi = last.height;
-        jumpCounter++;
-        }*/
