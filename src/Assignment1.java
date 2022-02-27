@@ -5,7 +5,7 @@ import java.util.StringTokenizer;
 
 public class Assignment1 {
 
-    int jumps, counter;
+    int jumps;
     public static void main(String[] args) throws IOException {
         new Assignment1().run();
     }
@@ -19,11 +19,8 @@ public class Assignment1 {
         int n = Integer.parseInt(str[0]);
         jumps = Integer.parseInt(str[1]);
 
-
-
         int[] arr = new int[n];
         StringTokenizer st = new StringTokenizer(in.readLine());
-
 
 
         for (int i = 0; i < n; i++) {
@@ -33,7 +30,6 @@ public class Assignment1 {
 
 
         int initialStrength = arr[arr.length-1];
-
         if (arr.length == 2) {
             int i = arr[1] - arr[0];
             if ( i == 0) {
@@ -42,82 +38,60 @@ public class Assignment1 {
             System.out.println(i);
         } else {
 
-            NodeB sameZero = new NodeB(0, 0);
             NodeB sameMid = new NodeB(0, 0);
-
-
-            any(arr, 1, initialStrength, sameZero, sameMid);
+            any(arr, 1, initialStrength, sameMid);
         }
-
-/*        System.out.println();
-        System.out.println(n + " " + jumps);
-        for (int i : arr) {
-            System.out.print(i + " ");
-
-        }*/
-
     }
 
 
 
 
-    private void any(int[] arr, int lowStrength, int topStrength, NodeB sameZero, NodeB sameMid) {
-//        System.out.println(counter);
+    private void any(int[] arr, int lowStrength, int topStrength, NodeB sameResult) {
         int mid = (int) (((lowStrength + topStrength) / 2) + 0.5);
 
 
-        int initJumps = isPossible(arr, mid);
+        int initJumps = getJumps(arr, mid);
 //        System.out.println("jumps: " + initJumps + ", top: " + topStrength + ", low: " + lowStrength + ", mid: " + mid);
 
-/*        if (mid == sameMid.lastMid) {
-            sameMid.counter++;
-            if (sameMid.counter > 9) {
-                System.out.println(sameMid.lastMid +1);
-                return;
-            }
+        if (initJumps == sameResult.lastMid) {
+            sameResult.counter++;
 
-        } else {
-            sameMid = new NodeB(0, mid);
-        }*/
-
-        if (initJumps == sameMid.lastMid) {
-            sameMid.counter++;
-
-            if (sameMid.counter > 9) {
+            if (sameResult.counter > 9) {
                 System.out.println(mid + 1);
                 return;
             }
         } else {
-            sameMid = new NodeB(0, initJumps);
+            sameResult = new NodeB(0, initJumps);
         }
 
         if (initJumps == jumps) {
-
-            for (int i = mid; i > (mid-100); i--) {
-
-                if (isPossible(arr, i) == jumps) {
-                    if (isPossible(arr, i-1) != jumps) {
-                        System.out.println(i);
-                        return;
-                    }
-                }
-            }
+            printOutThePreciseStrength(arr, mid);
 
         } else if (initJumps > jumps) {
-            any(arr, mid+1, topStrength, sameZero, sameMid);
+            any(arr, mid+1, topStrength, sameResult);
 
         } else if ( initJumps == 0) {
-            any(arr, mid+1, topStrength, sameZero, sameMid);
-
+            any(arr, mid+1, topStrength, sameResult);
 
         } else {
-            any(arr, lowStrength, mid-1, sameZero, sameMid);
+            any(arr, lowStrength, mid-1, sameResult);
 
         }
     }
 
+    private void printOutThePreciseStrength(int [] arr, int mid) {
+        for (int i = mid; i > (mid-100); i--) {
 
-    private int isPossible(int[] arr, int strength) {
+            if (getJumps(arr, i) == jumps) {
+                if (getJumps(arr, i-1) != jumps) {
+                    System.out.println(i);
+                    return;
+                }
+            }
+        }
+    }
+
+    private int getJumps(int[] arr, int strength) {
         int jumpCounter = 0;
 
         NodeA lastNode = new NodeA(1, arr[0]);
@@ -165,7 +139,6 @@ class NodeA {
 
 
 }
-
 
 
 class NodeB{
