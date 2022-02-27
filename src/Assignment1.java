@@ -41,21 +41,21 @@ public class Assignment1 {
             }
             System.out.println(i);
         } else {
-            any(arr, 1, initialStrength, 0);
+            any(arr, 1, initialStrength, 0, 0);
         }
 
-        System.out.println();
+/*        System.out.println();
         System.out.println(n + " " + jumps);
         for (int i : arr) {
             System.out.print(i + " ");
 
-        }
+        }*/
 
     }
 
     NodeB lastResult;
 
-    private void any(int[] arr, int lowStrength, int topStrength, int zeroCounter) {
+    private void any(int[] arr, int lowStrength, int topStrength, int zeroCounter, int lastMid) {
 //        System.out.println(counter);
         int mid = (int) (((lowStrength + topStrength) / 2) + 0.5);
 
@@ -63,6 +63,15 @@ public class Assignment1 {
         int initJumps = isPossible(arr, mid);
         System.out.println("jumps: " + initJumps + ", top: " + topStrength + ", low: " + lowStrength + ", mid: " + mid);
 
+        if (lastMid == mid) {
+            zeroCounter++;
+            System.out.println(zeroCounter);
+        } else {
+            lastResult = new NodeB(initJumps, lastMid);
+            zeroCounter = 0;
+        }
+
+        lastMid = mid;
 
         if (zeroCounter > 10) {
             System.out.println(lastResult.strength);
@@ -82,19 +91,19 @@ public class Assignment1 {
             }
 
         } else if (initJumps > jumps) {
-            lastResult = new NodeB(initJumps, mid);
-            zeroCounter = 0;
-            any(arr, mid+1, topStrength, zeroCounter);
+/*            lastResult = new NodeB(initJumps, mid);
+            zeroCounter = 0;*/
+            any(arr, mid+1, topStrength, zeroCounter, lastMid);
 
         } else if ( initJumps == 0) {
-            zeroCounter++;
-            any(arr, mid+1, topStrength, zeroCounter);
+           // zeroCounter++;
+            any(arr, mid+1, topStrength, zeroCounter, lastMid);
 
 
         } else {
-            lastResult = new NodeB(initJumps, mid);
-            zeroCounter = 0;
-            any(arr, lowStrength, mid-1, zeroCounter);
+ //           lastResult = new NodeB(initJumps, mid);
+         //   zeroCounter = 0;
+            any(arr, lowStrength, mid-1, zeroCounter, lastMid);
 
         }
     }
