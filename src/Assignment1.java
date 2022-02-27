@@ -1,7 +1,6 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.lang.constant.Constable;
 import java.util.StringTokenizer;
 
 public class Assignment1 {
@@ -32,17 +31,24 @@ public class Assignment1 {
 
 
         int initialStrength = arr[arr.length-1];
-        any(arr, 1, initialStrength);
+        any(arr, 1, initialStrength, 0);
     }
 
+    NodeB lastResult;
 
-    private void any(int[] arr, int lowStrength, int topStrength) {
-        counter++;
+    private void any(int[] arr, int lowStrength, int topStrength, int zeroCounter) {
 //        System.out.println(counter);
         int mid = (int) (((lowStrength + topStrength) / 2) + 0.5);
 
 
         int initJumps = isPossible(arr, mid);
+//        System.out.println("jumps: " + initJumps + ", top: " + topStrength + ", low: " + lowStrength + ", mid: " + mid);
+
+
+        if (zeroCounter > 10) {
+            System.out.println(lastResult.strength);
+            return;
+        }
 
         if (initJumps == jumps) {
 
@@ -57,14 +63,19 @@ public class Assignment1 {
             }
 
         } else if (initJumps > jumps) {
-            any(arr, mid+1, topStrength);
+            lastResult = new NodeB(initJumps, mid);
+            zeroCounter = 0;
+            any(arr, mid+1, topStrength, zeroCounter);
 
         } else if ( initJumps == 0) {
-            any(arr, mid+1, topStrength);
+            zeroCounter++;
+            any(arr, mid+1, topStrength, zeroCounter);
 
 
         } else {
-            any(arr, lowStrength, mid-1);
+            lastResult = new NodeB(initJumps, mid);
+            zeroCounter = 0;
+            any(arr, lowStrength, mid-1, zeroCounter);
 
         }
     }
@@ -75,39 +86,41 @@ public class Assignment1 {
         int jumpCounter = 0;
 
 
-        A last = new A(1, arr[0]);
-        int i = last.index;
-        int hi = last.height;
+        NodeA lastNode = new NodeA(1, arr[0]);
+        int i = lastNode.index;
+        int hi = lastNode.height;
 
         for (int j = 1; j < arr.length; j++) {
 
             int hj = arr[j];
 
 
-            if ( (i + strength >= j+1) && (hi+strength >= hj) ) {
+            if ( ( i + strength >= j+1) && (hi+strength >= hj) ) {
 
 
                 if (j == arr.length-1) {
                      jumpCounter++;
                      return jumpCounter;
 
-                } else if ( !(i + strength >= j+2) || !(hi + strength >= arr[j+1]) ) {
+                } else if ( ( i + strength >= j+2) && (hi+strength >= arr[j+1]) ) {
 
-                    last = new A(j+1, hj);
-                    i = last.index;
-                    hi = last.height;
+                } else {
+
+                    lastNode = new NodeA(j+1, hj);
+                    i = lastNode.index;
+                    hi = lastNode.height;
                     jumpCounter++;
                 }
 
 
 
 /*                if (j == arr.length-1) {
-                    last = new A(j+1, hj);
+                    lastNode = new A(j+1, hj);
                     jumpCounter++;
 
                 } else if ( !(i + strength >= j+2) || !(hi+strength >= arr[j+1])) {
 
-                    last = new A(j+1, hj);
+                    lastNode = new A(j+1, hj);
                     jumpCounter++;
 
                 }*/
@@ -117,16 +130,39 @@ public class Assignment1 {
             }
         }
 
-        return jumpCounter;
+        return 0;
     }
 }
 
 
-class A {
+class NodeA {
     int index;
     int height;
-    public A(int index, int height) {
+    public NodeA(int index, int height) {
         this.index = index;
         this.height = height;
     }
+
+
 }
+
+
+
+class NodeB{
+    int jumps, strength;
+    public NodeB(int jumps, int strength) {
+        this.jumps = jumps;
+        this.strength = strength;
+    }
+}
+
+
+
+/*
+else if ( !(i + strength >= j+2) || !(hi + strength >= arr[j+1]) ) {
+
+        last = new A(j+1, hj);
+        i = last.index;
+        hi = last.height;
+        jumpCounter++;
+        }*/
