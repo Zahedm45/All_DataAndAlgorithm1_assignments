@@ -25,7 +25,7 @@ public class Assignment2 {
         int n = Integer.parseInt(input.readLine());
 
         //String[] strArr = new String[n];
-        LinkedList linkedList = null;
+        LinkedList linkedList = new LinkedList();
 
         for (int i = 0; i < 1000; i++) {
             String[] line = input.readLine().split(" ");
@@ -35,28 +35,13 @@ public class Assignment2 {
             switch (operation) {
                 case "R" -> {
                     int value = Integer.parseInt(line[1]);
-                    if (linkedList == null) {
-                        linkedList = new LinkedList(value);
-                    } else {
-                        linkedList.addRightNode( value);
-                    }
-
-
-                    break;
+                    linkedList.addRightNode(value);
                 }
                 case "L" -> {
                     int value = Integer.parseInt(line[1]);
-                    if (linkedList == null) {
-                        linkedList = new LinkedList(value);
-                    } else {
-                        linkedList.addLeftNode(value);
-                    }
-
-
-                    break;
+                    linkedList.addLeftNode(value);
                 }
                 case "E" -> {
-                    assert linkedList != null;
                     Node node = linkedList.extractMidNode();
                     System.out.println(node.value);
                 }

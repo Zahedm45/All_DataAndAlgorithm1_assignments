@@ -22,15 +22,51 @@ public class LinkedList {
 
 
     public void addRightNode(int value) {
+        if (midNode == null) {
+            midNode = new Node(null, value, null);
 
+        } else {
 
+            if (rightNode == null) {
+                rightNode = new Node(midNode, value, null);
+                midNode.rightNode = rightNode;
+
+            } else {
+                Node newNode = new Node(rightNode, value, null);
+                rightNode.rightNode = newNode;
+                rightNode = newNode;
+
+                midNode = midNode.rightNode;
+
+            }
+
+        }
+
+        rightSideNodeSize++;
     }
 
 
 
 
     public void addLeftNode(int value) {
+        if (midNode == null) {
+            midNode = new Node(null, value, null);
 
+        } else {
+            if (leftNode == null) {
+                leftNode = new Node(null, value, midNode);
+
+            } else {
+
+                Node newNode = new Node(null, value, leftNode);
+                leftNode.leftNode = newNode;
+                leftNode = newNode;
+
+            }
+
+            midNode = midNode.leftNode;
+            leftSideNodeSize++;
+        }
     }
 
 
@@ -58,6 +94,28 @@ public class LinkedList {
 
 
     public Node extractMidNode() {
+        Node temp = midNode;
 
+        if (midNode.leftNode != null && midNode.rightNode != null) {
+            midNode.leftNode.rightNode = temp.rightNode;
+            midNode.rightNode.leftNode = temp.leftNode;
+
+        } else if (midNode.rightNode != null) {
+            midNode.rightNode = null;
+
+        } else if (midNode.leftNode != null) {
+            midNode.leftNode = null;
+        }
+
+
+        if (leftSideNodeSize >= rightSideNodeSize) {
+            midNode = midNode.leftNode;
+            leftSideNodeSize--;
+        } else {
+            midNode = midNode.rightNode;
+            rightSideNodeSize--;
+        }
+
+       return temp;
     }
 }
