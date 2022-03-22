@@ -3,27 +3,64 @@ package assignment_2;
 public class LinkedList {
     //private Node node;
 
-    private Node leftNode ;
+/*    private Node leftNode ;
     private Node midNode;
-    private Node rightNode;
+    private Node rightNode;*/
 
+    private Node head;
+    private Node tail;
 
 
 
     private int leftSideNodeSize = 0;
     private int rightSideNodeSize = 0;
 
+    public void addRightNode(int value) {
+        if (head == null) {
+            addFirstNode(value);
 
-//    public LinkedList(int value) {
-//        this.midNode = new Node(null, value, null);
-//        this.rightSideNodeSize = 1;
-//        //pritNode();
-//
-//    }
+        } else {
+            tail.rightNode = new Node(tail, value, null);
+            tail = tail.rightNode;
+
+        }
+    }
+
+
+    public void addLeftNode(int value) {
+        if (head == null) {
+            addFirstNode(value);
+        } else {
+            head.leftNode = new Node(null, value, head);
+            head = head.leftNode;
+        }
+    }
+
+
+    private void addFirstNode(int value) {
+        tail = new Node(null, value, null);
+        head = tail;
+    }
 
 
 
 
+
+
+
+    public void pritNode(){
+        Node temp = head;
+        while (temp != null) {
+            System.out.println(temp.value);
+            temp = temp.rightNode;
+        }
+
+    }
+
+
+
+
+/*
     public void addRightNode(int value) {
         if (midNode == null) {
             midNode = new Node(null, value, null);
@@ -121,5 +158,5 @@ public class LinkedList {
         }
 
        return temp;
-    }
+    }*/
 }

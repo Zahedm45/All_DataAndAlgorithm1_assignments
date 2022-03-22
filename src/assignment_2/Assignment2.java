@@ -22,6 +22,9 @@ public class Assignment2 {
 
     private void run() throws IOException {
         BufferedReader input = new BufferedReader(new InputStreamReader(System.in));
+
+
+
         int n = Integer.parseInt(input.readLine());
 
         //String[] strArr = new String[n];
@@ -46,6 +49,7 @@ public class Assignment2 {
                     System.out.println(node.value);
                 }
             }
+            linkedList.pritNode();
 
         }
         //linkedList.pritNode();
