@@ -7,6 +7,9 @@ public class LinkedList {
     private Node midNode;
     private Node rightNode;
 
+
+
+
     private int leftSideNodeSize = 0;
     private int rightSideNodeSize = 0;
 
@@ -55,6 +58,7 @@ public class LinkedList {
         } else {
             if (leftNode == null) {
                 leftNode = new Node(null, value, midNode);
+                midNode.leftNode = leftNode;
 
             } else {
 
