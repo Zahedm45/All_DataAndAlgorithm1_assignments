@@ -28,7 +28,7 @@ public class LinkedList {
         } else {
             tail.rightNode = new Node(tail, value, null);
             tail = tail.rightNode;
-            setMidNode();
+            //setMidNode();
             //midNode = midNode.rightNode;
 
         }
@@ -44,7 +44,7 @@ public class LinkedList {
         } else {
             head.leftNode = new Node(null, value, head);
             head = head.leftNode;
-            setMidNode();
+            ///setMidNode();
             //midNode = midNode.leftNode;
         }
 
@@ -74,24 +74,59 @@ public class LinkedList {
 */
 
 
-    private void setMidNode(){
+     void setMidNode(){
         System.out.println("right: " + rightSideNodeSize + " left: " + leftSideNodeSize);
-        if (leftSideNodeSize == rightSideNodeSize) {
-            midNode = midNode.leftNode;
-            leftSideNodeSize -= 1;
-            rightSideNodeSize += 1;
 
-        } else if (leftSideNodeSize > rightSideNodeSize) {
-            midNode = midNode.leftNode;
-            leftSideNodeSize -= 1;
-            rightSideNodeSize += 1;
+        if (rightSideNodeSize > leftSideNodeSize) {
+            int n = (rightSideNodeSize - leftSideNodeSize)/2;
+
+
+            Node temp = midNode;
+
+            while (rightSideNodeSize - 2 > leftSideNodeSize) {
+                temp = temp.rightNode;
+                rightSideNodeSize--;
+                leftSideNodeSize++;
+            }
+
+/*            for (int i = 0; i < n; i++) {
+                temp = temp.rightNode;
+                rightSideNodeSize--;
+                leftSideNodeSize++;
+*//*                if (rightSideNodeSize == leftSideNodeSize && rightSideNodeSize == 2) {
+                    break;
+                }*//*
+            }*/
+            midNode = temp;
+        }
+
+
+
+/*        if (leftSideNodeSize >= rightSideNodeSize) {
+
+            int n = (leftSideNodeSize - rightSideNodeSize)/2;
+            Node temp = midNode;
+            for (int i = 0; i <= n; i++) {
+                temp = temp.leftNode;
+                leftSideNodeSize--;
+                rightSideNodeSize++;
+            }
+            midNode = temp;
+
 
         } else {
-            midNode = midNode.rightNode;
-            rightSideNodeSize -= 1;
-            leftSideNodeSize += 1;
-        }
-    }
+            int n = (rightSideNodeSize - leftSideNodeSize)/2;
+            Node temp = midNode;
+            for (int i = 0; i < n; i++) {
+                temp = temp.rightNode;
+                rightSideNodeSize--;
+                leftSideNodeSize++;
+            }
+            midNode = temp;
+        }*/
+         System.out.println("right: " + rightSideNodeSize + " left: " + leftSideNodeSize);
+
+     }
 
 
 
