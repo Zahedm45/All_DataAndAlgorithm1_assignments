@@ -45,11 +45,12 @@ public class Assignment2 {
                     linkedList.addLeftNode(value);
                 }
                 case "E" -> {
-                    Node node = linkedList.extractMidNode();
-                    System.out.println(node.value);
+                    //Node node = linkedList.extractMidNode();
+                    linkedList.pritNode();
+
                 }
             }
-            linkedList.pritNode();
+            //linkedList.pritNode();
 
         }
         //linkedList.pritNode();
