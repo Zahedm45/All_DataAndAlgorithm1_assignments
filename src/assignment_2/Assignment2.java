@@ -47,9 +47,8 @@ public class Assignment2 {
                 case "E" -> {
                     //Node node = linkedList.extractMidNode();
                     linkedList.pritNode();
-                    linkedList.setMidNode();
-                    linkedList.pritNode();
-                    System.out.println();
+/*                    linkedList.pritNode();
+                    System.out.println();*/
                 }
             }
             //linkedList.pritNode();

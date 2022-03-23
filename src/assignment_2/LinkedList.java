@@ -18,42 +18,54 @@ public class LinkedList {
     private int leftSideNodeSize = 0;
     private int rightSideNodeSize = 0;
     private int totalNodeSize = 0;
-    private int midNodeAt = 0;
+    //private int midNodeAt = 0;
 
     public void addRightNode(int value) {
-        rightSideNodeSize += 1;
         totalNodeSize += 1;
+
         if (head == null) {
-            addFirstNode(value);
+            addFirstNode(value, MOVE_RIGHT);
 
         } else {
-            tail.rightNode = new Node(tail, value, null);
+            tail.rightNode = new Node(tail, value, MOVE_RIGHT,null);
             tail = tail.rightNode;
-            //setMidNode();
-            //midNode = midNode.rightNode;
+            rightSideNodeSize += 1;
+            System.out.println("total size: " + totalNodeSize +" right size: "+ rightSideNodeSize +"  left: " + leftSideNodeSize);
+            if (totalNodeSize > 2) {
+                if (rightSideNodeSize > leftSideNodeSize + 1) {
+                    midNode = midNode.rightNode;
+                    rightSideNodeSize--;
+                    leftSideNodeSize++;
+                }
+
+
+            }
 
         }
+        System.out.println("total size: " + totalNodeSize +" right size: "+ rightSideNodeSize +"  left: " + leftSideNodeSize);
 
     }
 
 
     public void addLeftNode(int value) {
-        leftSideNodeSize += 1;
-        totalNodeSize += 1;
         if (head == null) {
-            addFirstNode(value);
+            addFirstNode(value, MOVE_LEFT);
+            totalNodeSize++;
+
         } else {
-            head.leftNode = new Node(null, value, head);
+            head.leftNode = new Node(null, value,MOVE_LEFT, head);
             head = head.leftNode;
-            ///setMidNode();
-            //midNode = midNode.leftNode;
+            totalNodeSize++;
+            if (totalNodeSize > 1) {
+                midNode = midNode.leftNode;
+            }
         }
 
     }
 
 
-    private void addFirstNode(int value) {
-        tail = new Node(null, value, null);
+    private void addFirstNode(int value, String leftOrRight) {
+        tail = new Node(null, value, leftOrRight, null);
         midNode = head = tail;
 
     }
@@ -75,6 +87,7 @@ public class LinkedList {
 */
 
 
+/*
      void setMidNode(){
         System.out.println("total nodes: " + totalNodeSize + " mid node at: " + midNodeAt);
 
@@ -98,6 +111,7 @@ public class LinkedList {
 
 
 
+*/
 /*         if (leftSideNodeSize > rightSideNodeSize) {
              Node temp = midNode;
              while (rightSideNodeSize + 1  < leftSideNodeSize) {
@@ -114,7 +128,8 @@ public class LinkedList {
                  leftSideNodeSize++;
              }
              midNode = temp;
-         }*/
+         }*//*
+
 
 
 
@@ -122,6 +137,7 @@ public class LinkedList {
          System.out.println("total nodes: " + totalNodeSize + " mid node at: " + midNodeAt);
 
      }
+*/
 
 
 
