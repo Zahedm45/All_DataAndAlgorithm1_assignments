@@ -15,13 +15,3 @@ public class Node {
     }
 
 }
-
-class Command {
-    String operation;
-    int value;
-
-    public Command(String operation, int value) {
-        this.operation = operation;
-        this.value = value;
-    }
-}

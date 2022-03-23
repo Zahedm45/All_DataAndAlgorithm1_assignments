@@ -47,7 +47,6 @@ public class LinkedList {
             }
 
         }
-        //System.out.println("total size: " + totalNodeSize +" right size: "+ rightSideNodeSize +"  left: " + leftSideNodeSize);
 
     }
 
@@ -62,20 +61,10 @@ public class LinkedList {
             head = head.leftNode;
             leftSideNodeSize++;
 
-
             if (totalNodeSize > 1) {
                 if (totalNodeSize % 2 == 0) {
                     midNode = midNode.leftNode;
                 }
-
-
-/*                if (leftSideNodeSize > rightSideNodeSize){
-                    midNode = midNode.leftNode;
-                    leftSideNodeSize--;
-                    rightSideNodeSize++;
-                }*/
-
-
             }
         }
 
