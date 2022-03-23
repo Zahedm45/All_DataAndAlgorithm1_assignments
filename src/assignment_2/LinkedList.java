@@ -48,16 +48,24 @@ public class LinkedList {
 
 
     public void addLeftNode(int value) {
+        totalNodeSize += 1;
         if (head == null) {
             addFirstNode(value, MOVE_LEFT);
-            totalNodeSize++;
 
         } else {
             head.leftNode = new Node(null, value,MOVE_LEFT, head);
             head = head.leftNode;
-            totalNodeSize++;
+            leftSideNodeSize++;
+
+
             if (totalNodeSize > 1) {
-                midNode = midNode.leftNode;
+                if (leftSideNodeSize > rightSideNodeSize){
+                    midNode = midNode.leftNode;
+                    leftSideNodeSize--;
+                    rightSideNodeSize++;
+                }
+
+
             }
         }
 
