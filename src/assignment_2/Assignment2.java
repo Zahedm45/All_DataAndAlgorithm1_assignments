@@ -49,7 +49,7 @@ public class Assignment2 {
                     linkedList.pritNode();
                     linkedList.setMidNode();
                     linkedList.pritNode();
-
+                    System.out.println();
                 }
             }
             //linkedList.pritNode();
