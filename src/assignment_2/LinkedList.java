@@ -30,7 +30,7 @@ public class LinkedList {
             tail.rightNode = new Node(tail, value, MOVE_RIGHT,null);
             tail = tail.rightNode;
             rightSideNodeSize += 1;
-            System.out.println("total size: " + totalNodeSize +" right size: "+ rightSideNodeSize +"  left: " + leftSideNodeSize);
+            //System.out.println("total size: " + totalNodeSize +" right size: "+ rightSideNodeSize +"  left: " + leftSideNodeSize);
             if (totalNodeSize > 2) {
                 if (totalNodeSize % 2 != 0) {
                     midNode = midNode.rightNode;

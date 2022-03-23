@@ -44,9 +44,9 @@ public class Assignment2 {
 
         int n = Integer.parseInt(input.readLine());
         String[] arr = new String[n];
-        for (int i = 0; i < 1000; i++) {
-            //arr[i] = input.readLine();
-            String[] command = input.readLine().split(" ");
+        for (int i = 0; i < n; i++) {
+            arr[i] = input.readLine();
+/*            String[] command = input.readLine().split(" ");
 
             switch (command[0]) {
                 case "R" -> {
@@ -67,7 +67,7 @@ public class Assignment2 {
 
                 }
 
-            }
+            }*/
 
 
         }
