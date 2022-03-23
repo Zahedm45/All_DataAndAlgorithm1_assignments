@@ -1,12 +1,12 @@
 package assignment_2;
 
 public class Node {
-    int value;
+    String value;
     String operation;
     Node rightNode;
     Node leftNode;
 
-    public Node(Node leftNode, int value, String leftOrRight, Node rightNode) {
+    public Node(Node leftNode, String value, String leftOrRight, Node rightNode) {
         this.value = value;
         this.operation = leftOrRight;
         this.leftNode = leftNode;
@@ -14,4 +14,14 @@ public class Node {
 
     }
 
+}
+
+class Command {
+    String operation;
+    int value;
+
+    public Command(String operation, int value) {
+        this.operation = operation;
+        this.value = value;
+    }
 }
