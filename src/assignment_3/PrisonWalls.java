@@ -7,67 +7,68 @@ import java.util.ArrayList;
 
 public class PrisonWalls {
 
-    private int x, y;
+    private int nSize, mSize;
 
-    private Wall removedWalls;
+    private ArrayList<Integer> counter = new ArrayList<>();
+
+    private int[][] matrix;
 
 
     public static void main(String[] args) throws IOException {
-        //String[] arr = new PrisonWalls().run();
+      PrisonWalls prisonWalls = new PrisonWalls();
+      prisonWalls.run();
+      //prisonWalls.printOut();
+        System.out.println("hello");
 
     }
 
 
 
 
-    private ArrayList<Sub> run() throws IOException {
+    private void run() throws IOException {
         BufferedReader input = new BufferedReader(new InputStreamReader(System.in));
-        x = Integer.parseInt(input.readLine());
-        y = Integer.parseInt(input.readLine());
+        nSize = Integer.parseInt(input.readLine());
+        mSize = Integer.parseInt(input.readLine());
+        matrix = new int[mSize][nSize];
 
-        int n = Integer.parseInt(input.readLine());
 
+        int removals = Integer.parseInt(input.readLine());
 
-        ArrayList<Sub> arrList = new ArrayList<>();
-
-        for (int i = 0; i < n; i++) {
+        for (int i = 0; i < removals; i++) {
             String[] str= input.readLine().split(" ");
-            int x = Integer.parseInt(str[0]);
-            int y = Integer.parseInt(str[1]);
-            //arrList.add(new Sub(x, y));
+            int n = Integer.parseInt(str[0]);
+            int m = Integer.parseInt(str[1]);
+
+
+            removeWall(n, m);
+            System.out.println();
+            System.out.println("n: " + n + ", m: " + m);
+            printOut();
+            System.out.println();
+            System.out.println();
 
 
         }
-        return arrList;
     }
 
 
 
-    private void addRemovedWall(int x, int y) {
-        if (removedWalls == null) {
-            Wall wall = new Wall(x, y, null, null, null, null);
-            return;
+    private void removeWall(int n, int m) {
+        matrix[m][n] = 1;
+        if (!counter.contains(m)) {
+            counter.add(m);
         }
+    }
 
-        Wall temp = removedWalls;
-        while (temp.down != null) {
-            if (temp.x == x) {
 
+
+    private void printOut() {
+        for (int i = 0; i < this.mSize; i++) {
+            for (int j = 0; j < this.nSize; j++) {
+                System.out.print(matrix[i][j] + " ");
             }
-
-            temp = temp.down;
+            System.out.println();
         }
 
-
-    }
-
-}
-
-class Sub{
-    int x, y;
-
-    public Sub(int x, int y) {
-        this.x = x;
-        this.y = y;
     }
 }
