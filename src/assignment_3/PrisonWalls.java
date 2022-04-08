@@ -9,15 +9,13 @@ public class PrisonWalls {
 
     private int x, y;
 
+    private Wall removedWalls;
+
 
     public static void main(String[] args) throws IOException {
         //String[] arr = new PrisonWalls().run();
 
     }
-
-
-
-
 
 
 
@@ -36,11 +34,31 @@ public class PrisonWalls {
             String[] str= input.readLine().split(" ");
             int x = Integer.parseInt(str[0]);
             int y = Integer.parseInt(str[1]);
-            arrList.add(new Sub(x, y));
+            //arrList.add(new Sub(x, y));
 
 
         }
         return arrList;
+    }
+
+
+
+    private void addRemovedWall(int x, int y) {
+        if (removedWalls == null) {
+            Wall wall = new Wall(x, y, null, null, null, null);
+            return;
+        }
+
+        Wall temp = removedWalls;
+        while (temp.down != null) {
+            if (temp.x == x) {
+
+            }
+
+            temp = temp.down;
+        }
+
+
     }
 
 }
