@@ -3,6 +3,7 @@ package assignment_3;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class PrisonWalls {
@@ -20,8 +21,6 @@ public class PrisonWalls {
       //prisonWalls.printOut();
 
     }
-
-
 
 
     private void run() throws IOException {
@@ -47,16 +46,66 @@ public class PrisonWalls {
             System.out.println("n: " + n + ", m: " + m);
             printOut();
             System.out.println();
+            System.out.println("Graph");
+
+            graph.printGraph();
             System.out.println();
 
-            if (findPath()) {
-                System.out.println("Path is found " + i+1);
-                return;
-            }
-
-
         }
+
+        findPath();
     }
+
+
+
+
+
+    boolean[] visitedVertices;
+    int backLineVertices, frontLineVertices;
+
+    private void findPath() {
+        if (counter.size() != mSize) {
+            return;
+        }
+
+        frontLineVertices = nSize;
+        backLineVertices = (nSize * (mSize - 1)) - 1;
+
+        visitedVertices = new boolean[nSize*mSize];
+        for (int i = 0; i < frontLineVertices; i++) {
+            dsf(i);
+ /*           graph.undirectedGraph.get(i).forEach( (V) -> {
+                visitedVertices.add(V);
+                dsf(V, visitedVertices);
+            });*/
+        }
+
+
+    }
+
+    private void dsf(int vertex) {
+
+        visitedVertices[vertex] = true;
+
+
+        for (int v :graph.undirectedGraph.get(vertex)) {
+            System.out.println(v + " path..");
+        }
+
+
+    }
+
+    private void printOut() {
+        for (int i = 0; i < this.mSize; i++) {
+            for (int j = 0; j < this.nSize; j++) {
+                System.out.print(matrix[i][j] + " ");
+            }
+            System.out.println();
+        }
+
+    }
+
+
 
 
 
@@ -98,56 +147,6 @@ public class PrisonWalls {
 
 
     }
-
-
- /*   private boolean findPath() {
-        if (counter.size() != mSize){
-            return false;
-        }
-
-        return dsf(0, 0);
-
-    }
-
-
-    private boolean dsf(int m, int n) {
-        boolean isPathFound = false;
-
-        if (m >= mSize-1) {
-            System.out.println("returned");
-            return true;
-        }
-
-        if (matrix[m+1][n] == 1) {
-           isPathFound = dsf(m+1, n);
-        }
-
-        if (!isPathFound && n < nSize-1) {
-            if (matrix[m][n+1] == 1) {
-               isPathFound = dsf(m, n+1);
-            }
-        }
-
-
-        if (!isPathFound && n > 0) {
-            if (matrix[m][n-1] == 1) {
-               isPathFound = dsf(m, n-1);
-            }
-        }
-
-        return isPathFound;
-    }
-*/
-
-    private void printOut() {
-        for (int i = 0; i < this.mSize; i++) {
-            for (int j = 0; j < this.nSize; j++) {
-                System.out.print(matrix[i][j] + " ");
-            }
-            System.out.println();
-        }
-
-    }
 }
 
 
@@ -175,28 +174,28 @@ public class PrisonWalls {
 
 class Graph{
     int vertex;
-    ArrayList<ArrayList<Integer>> graph;
+    ArrayList<ArrayList<Integer>> undirectedGraph;
 
     public Graph(int vertex) {
         this.vertex = vertex;
-        graph = new ArrayList<>();
+        undirectedGraph = new ArrayList<>();
 
         for (int i = 0; i < vertex; i++) {
-            graph.add(new ArrayList<>());
+            undirectedGraph.add(new ArrayList<>());
         }
     }
 
     public void addEdge(int vertexA, int vertexB){
-        graph.get(vertexA).add(vertexB);
-        graph.get(vertexB).add(vertexA);
+        undirectedGraph.get(vertexA).add(vertexB);
+        undirectedGraph.get(vertexB).add(vertexA);
     }
 
 
     public void printGraph() {
         for (int i = 0; i < vertex; i++) {
-            System.out.println("Vertex: " + i);
+            System.out.print("Vertex: " + i);
 
-            for (int x : graph.get(i)) {
+            for (int x : undirectedGraph.get(i)) {
                 System.out.print(" -> " + x);
             }
             System.out.println();
