@@ -11,7 +11,7 @@ public class PrisonWalls {
     private int nSize, mSize;
 
     private ArrayList<Integer> counter;
-    private int[][] matrix;
+    private boolean[][] matrix;
     private Graph graph;
 
     boolean[] visitedVertices;
@@ -29,7 +29,7 @@ public class PrisonWalls {
         BufferedReader input = new BufferedReader(new InputStreamReader(System.in));
         nSize = Integer.parseInt(input.readLine());
         mSize = Integer.parseInt(input.readLine());
-        matrix = new int[mSize][nSize];
+        matrix = new boolean[mSize][nSize];
         counter = new ArrayList<>();
 
 
@@ -130,30 +130,30 @@ public class PrisonWalls {
         int vertexNum = (nSize*m) + n;
 
 
-        matrix[m][n] = 1;
+        matrix[m][n] = true;
         if (n < nSize-1) {
-            if (matrix[m][n+1] == 1) {
+            if (matrix[m][n + 1]) {
                 graph.addEdge(vertexNum, vertexNum+1);
             }
         }
 
 
         if (n > 0) {
-            if (matrix[m][n-1] == 1) {
+            if (matrix[m][n-1]) {
                 graph.addEdge(vertexNum, vertexNum-1 );
             }
         }
 
 
         if (m > 0) {
-            if (matrix[m-1][n] == 1) {
+            if (matrix[m-1][n]) {
                 int vNum2 = (nSize * (m-1)) + n;
                 graph.addEdge(vertexNum, vNum2);
             }
         }
 
         if (m < mSize-1) {
-            if (matrix[m+1][n] == 1) {
+            if (matrix[m+1][n]) {
                 int vNum2 = (nSize * (m+1)) + n;
                 graph.addEdge(vertexNum, vNum2);
             }
