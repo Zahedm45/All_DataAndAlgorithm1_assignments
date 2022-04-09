@@ -11,6 +11,7 @@ public class PrisonWalls {
     private int nSize, mSize;
 
     private ArrayList<Integer> counter;
+    int counterSize;
     private boolean[][] matrix;
     private Graph graph;
 
@@ -74,7 +75,7 @@ public class PrisonWalls {
 
 
     private boolean findPath() {
-        if (counter.size() != mSize) {
+        if (counterSize < mSize) {
             return false;
         }
 
@@ -125,6 +126,7 @@ public class PrisonWalls {
 
         if (!counter.contains(m)) {
             counter.add(m);
+            counterSize++;
         }
 
         int vertexNum = (nSize*m) + n;
