@@ -3,17 +3,18 @@ package assignment_3;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class PrisonWalls {
 
     private int nSize, mSize;
 
-    private ArrayList<Integer> counter;
+    //private ArrayList<Integer> counter;
     int counterSize;
     private boolean[][] matrix;
     private Graph graph;
+
+    boolean[] allM;
 
     boolean[] visitedVertices;
     int backLineVertices, frontLineVertices;
@@ -31,7 +32,8 @@ public class PrisonWalls {
         nSize = Integer.parseInt(input.readLine());
         mSize = Integer.parseInt(input.readLine());
         matrix = new boolean[mSize][nSize];
-        counter = new ArrayList<>();
+        //counter = new ArrayList<>();
+        allM = new boolean[mSize];
 
 
 
@@ -54,7 +56,10 @@ public class PrisonWalls {
             int n = Integer.parseInt(str2[0]);
             int m = Integer.parseInt(str2[1]);
 
-            removeWall(n, m);
+            if (removeWall(n, m)) {
+                System.out.println(i+1);
+                System.exit(0);
+            }
 
 /*            System.out.println();
             System.out.println("n: " + n + ", m: " + m);
@@ -64,10 +69,13 @@ public class PrisonWalls {
 
             graph.printGraph();
             System.out.println();*/
-            if (findPath()) {
+/*            if (findPath()) {
                 System.out.println(i+1);
                 System.exit(0);
             }
+
+            System.out.println();
+            System.out.println();*/
         }
     }
 
@@ -98,6 +106,7 @@ public class PrisonWalls {
 
         for (int v :graph.undirectedGraph.get(vertex)) {
             if (!visitedVertices[v]) {
+                //System.out.println("visted: " + v);
                if (dsf(v)) {
                    return true;
                }
@@ -122,20 +131,28 @@ public class PrisonWalls {
 
 
 
-    private void removeWall(int n, int m) {
+    private boolean removeWall(int n, int m) {
 
-        if (!counter.contains(m)) {
+/*        if (!counter.contains(m)) {
             counter.add(m);
+            counterSize++;
+        }*/
+
+        if (!allM[m]) {
+            allM[m] = true;
             counterSize++;
         }
 
+
         int vertexNum = (nSize*m) + n;
 
+        boolean linkFound = false;
 
         matrix[m][n] = true;
         if (n < nSize-1) {
             if (matrix[m][n + 1]) {
                 graph.addEdge(vertexNum, vertexNum+1);
+                linkFound = true;
             }
         }
 
@@ -143,6 +160,7 @@ public class PrisonWalls {
         if (n > 0) {
             if (matrix[m][n-1]) {
                 graph.addEdge(vertexNum, vertexNum-1 );
+                linkFound = true;
             }
         }
 
@@ -151,6 +169,7 @@ public class PrisonWalls {
             if (matrix[m-1][n]) {
                 int vNum2 = (nSize * (m-1)) + n;
                 graph.addEdge(vertexNum, vNum2);
+                linkFound = true;
             }
         }
 
@@ -158,11 +177,16 @@ public class PrisonWalls {
             if (matrix[m+1][n]) {
                 int vNum2 = (nSize * (m+1)) + n;
                 graph.addEdge(vertexNum, vNum2);
+                linkFound = true;
             }
         }
 
+        if (linkFound) {
+            return findPath();
+        }
 
 
+        return linkFound;
     }
 }
 
