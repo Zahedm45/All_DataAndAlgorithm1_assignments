@@ -13,7 +13,7 @@ public class PrisonWalls {
     int counterSize;
     private boolean[][] matrix;
     private Graph graph;
-
+    boolean isFirstDFS;
     boolean[] allM;
 
     boolean[] visitedVertices;
@@ -47,10 +47,10 @@ public class PrisonWalls {
 
         frontLineVertices = nSize;
         backLineVertices = (nSize * (mSize - 1)) - 1;
+        isFirstDFS = true;
 
 
-
-
+        visitedVertices = new boolean[nSize*mSize];
         for (int i = 0; i < removals; i++) {
             String[] str2 = str.get(i).split(" ");
             int n = Integer.parseInt(str2[0]);
@@ -80,14 +80,80 @@ public class PrisonWalls {
     }
 
 
+    private boolean removeWall(int n, int m) {
+
+        if (!allM[m]) {
+            allM[m] = true;
+            counterSize++;
+        }
+
+
+        int vertexNum = (nSize*m) + n;
+
+        boolean linkFound = false;
+
+        matrix[m][n] = true;
+        if (n < nSize-1) {
+            if (matrix[m][n + 1]) {
+                graph.addEdge(vertexNum, vertexNum+1);
+                if (visitedVertices[vertexNum+1]) {
+                    linkFound = true;
+                }
+            }
+        }
+
+
+        if (n > 0) {
+            if (matrix[m][n-1]) {
+                graph.addEdge(vertexNum, vertexNum-1 );
+                if (visitedVertices[vertexNum -1]) {
+                    linkFound = true;
+                }
+            }
+        }
+
+
+        if (m > 0) {
+            if (matrix[m-1][n]) {
+                int vNum2 = (nSize * (m-1)) + n;
+                graph.addEdge(vertexNum, vNum2);
+                if (visitedVertices[vNum2]) {
+                    linkFound = true;
+                }
+            }
+        }
+
+        if (m < mSize-1) {
+            if (matrix[m+1][n]) {
+                int vNum2 = (nSize * (m+1)) + n;
+                graph.addEdge(vertexNum, vNum2);
+                if (visitedVertices[vNum2]) {
+                    linkFound = true;
+                }
+
+            }
+        }
+
+
+        if (counterSize >= mSize) {
+            if (linkFound || isFirstDFS) {
+                visitedVertices = new boolean[nSize*mSize];
+                isFirstDFS = false;
+                return findPath();
+            }
+        }
+
+
+
+        return linkFound;
+    }
+
+
+
 
 
     private boolean findPath() {
-        if (counterSize < mSize) {
-            return false;
-        }
 
-        visitedVertices = new boolean[nSize*mSize];
         for (int i = 0; i < frontLineVertices; i++) {
             if (dsf(i)) {
                 return true;
@@ -107,9 +173,9 @@ public class PrisonWalls {
         for (int v :graph.undirectedGraph.get(vertex)) {
             if (!visitedVertices[v]) {
                 //System.out.println("visted: " + v);
-               if (dsf(v)) {
-                   return true;
-               }
+                if (dsf(v)) {
+                    return true;
+                }
             }
         }
 
@@ -128,66 +194,6 @@ public class PrisonWalls {
     }
 
 
-
-
-
-    private boolean removeWall(int n, int m) {
-
-/*        if (!counter.contains(m)) {
-            counter.add(m);
-            counterSize++;
-        }*/
-
-        if (!allM[m]) {
-            allM[m] = true;
-            counterSize++;
-        }
-
-
-        int vertexNum = (nSize*m) + n;
-
-        boolean linkFound = false;
-
-        matrix[m][n] = true;
-        if (n < nSize-1) {
-            if (matrix[m][n + 1]) {
-                graph.addEdge(vertexNum, vertexNum+1);
-                linkFound = true;
-            }
-        }
-
-
-        if (n > 0) {
-            if (matrix[m][n-1]) {
-                graph.addEdge(vertexNum, vertexNum-1 );
-                linkFound = true;
-            }
-        }
-
-
-        if (m > 0) {
-            if (matrix[m-1][n]) {
-                int vNum2 = (nSize * (m-1)) + n;
-                graph.addEdge(vertexNum, vNum2);
-                linkFound = true;
-            }
-        }
-
-        if (m < mSize-1) {
-            if (matrix[m+1][n]) {
-                int vNum2 = (nSize * (m+1)) + n;
-                graph.addEdge(vertexNum, vNum2);
-                linkFound = true;
-            }
-        }
-
-        if (linkFound) {
-            return findPath();
-        }
-
-
-        return linkFound;
-    }
 }
 
 
