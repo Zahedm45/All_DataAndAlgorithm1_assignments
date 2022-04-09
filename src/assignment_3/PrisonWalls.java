@@ -14,6 +14,8 @@ public class PrisonWalls {
     private int[][] matrix;
     private Graph graph;
 
+    boolean[] visitedVertices;
+    int backLineVertices, frontLineVertices;
 
     public static void main(String[] args) throws IOException {
       PrisonWalls prisonWalls = new PrisonWalls();
@@ -42,30 +44,38 @@ public class PrisonWalls {
 
             removeWall(n, m);
 
-            System.out.println();
-            System.out.println("n: " + n + ", m: " + m);
-            printOut();
-            System.out.println();
-            System.out.println("Graph");
 
-            graph.printGraph();
-            System.out.println();
 
+            if (findPath()) {
+                System.out.println();
+                System.out.println("n: " + n + ", m: " + m);
+                printOut();
+                System.out.println();
+                System.out.println("Graph");
+
+                graph.printGraph();
+                System.out.println();
+
+
+                System.out.println(i+1);
+                System.exit(0);
+            }
         }
 
-        findPath();
+
+
+
+
+
     }
 
 
 
 
-
-    boolean[] visitedVertices;
-    int backLineVertices, frontLineVertices;
-
-    private void findPath() {
-        if (counter.size() != mSize) {
-            return;
+    private boolean findPath() {
+        if (counter.size() < mSize) {
+            System.out.println("heeeellll");
+            return false;
         }
 
         frontLineVertices = nSize;
@@ -73,27 +83,34 @@ public class PrisonWalls {
 
         visitedVertices = new boolean[nSize*mSize];
         for (int i = 0; i < frontLineVertices; i++) {
-            dsf(i);
- /*           graph.undirectedGraph.get(i).forEach( (V) -> {
-                visitedVertices.add(V);
-                dsf(V, visitedVertices);
-            });*/
+            if (dsf(i)) {
+                return true;
+            }
         }
 
-
+        return false;
     }
 
-    private void dsf(int vertex) {
+    private boolean dsf(int vertex) {
+        if (vertex > backLineVertices) {
+            System.out.println("visited vertex return: " + vertex);
+            return true;
+        }
 
         visitedVertices[vertex] = true;
-
+        System.out.println("visited vertex: " + vertex);
 
         for (int v :graph.undirectedGraph.get(vertex)) {
-            System.out.println(v + " path..");
+            if (!visitedVertices[v]) {
+               if (dsf(v)) {
+                   return true;
+               }
+            }
         }
 
-
+        return false;
     }
+
 
     private void printOut() {
         for (int i = 0; i < this.mSize; i++) {
@@ -117,19 +134,6 @@ public class PrisonWalls {
 
         int vertexNum = (nSize*m) + n;
 
-        if (m < mSize-1) {
-            if (matrix[m+1][n] == 1) {
-                int vNum2 = (nSize * (m+1)) + n;
-                graph.addEdge(vertexNum, vNum2);
-            }
-        }
-
-        if (m > 0) {
-            if (matrix[m-1][n] == 1) {
-                int vNum2 = (nSize * (m-1)) + n;
-                graph.addEdge(vertexNum, vNum2);
-            }
-        }
 
 
         if (n < nSize-1) {
@@ -145,6 +149,21 @@ public class PrisonWalls {
             }
         }
 
+
+
+        if (m < mSize-1) {
+            if (matrix[m+1][n] == 1) {
+                int vNum2 = (nSize * (m+1)) + n;
+                graph.addEdge(vertexNum, vNum2);
+            }
+        }
+
+        if (m > 0) {
+            if (matrix[m-1][n] == 1) {
+                int vNum2 = (nSize * (m-1)) + n;
+                graph.addEdge(vertexNum, vNum2);
+            }
+        }
 
     }
 }
