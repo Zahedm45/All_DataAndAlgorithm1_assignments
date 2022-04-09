@@ -44,37 +44,27 @@ public class PrisonWalls {
 
             removeWall(n, m);
 
+/*            System.out.println();
+            System.out.println("n: " + n + ", m: " + m);
+            printOut();
+            System.out.println();
+            System.out.println("Graph");
 
+            graph.printGraph();
+            System.out.println();*/
 
             if (findPath()) {
-                System.out.println();
-                System.out.println("n: " + n + ", m: " + m);
-                printOut();
-                System.out.println();
-                System.out.println("Graph");
-
-                graph.printGraph();
-                System.out.println();
-
-
                 System.out.println(i+1);
                 System.exit(0);
             }
         }
-
-
-
-
-
-
     }
 
 
 
 
     private boolean findPath() {
-        if (counter.size() < mSize) {
-            System.out.println("heeeellll");
+        if (counter.size() != mSize) {
             return false;
         }
 
@@ -93,12 +83,11 @@ public class PrisonWalls {
 
     private boolean dsf(int vertex) {
         if (vertex > backLineVertices) {
-            System.out.println("visited vertex return: " + vertex);
             return true;
         }
 
         visitedVertices[vertex] = true;
-        System.out.println("visited vertex: " + vertex);
+        //System.out.println("visited vertex: " + vertex);
 
         for (int v :graph.undirectedGraph.get(vertex)) {
             if (!visitedVertices[v]) {
