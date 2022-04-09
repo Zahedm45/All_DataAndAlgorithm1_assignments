@@ -10,7 +10,7 @@ public class PrisonWalls {
 
     private int nSize, mSize;
 
-    private ArrayList<Integer> counter = new ArrayList<>();
+    private ArrayList<Integer> counter;
     private int[][] matrix;
     private Graph graph;
 
@@ -30,17 +30,28 @@ public class PrisonWalls {
         nSize = Integer.parseInt(input.readLine());
         mSize = Integer.parseInt(input.readLine());
         matrix = new int[mSize][nSize];
+        counter = new ArrayList<>();
 
 
 
         int removals = Integer.parseInt(input.readLine());
         graph = new Graph(nSize * mSize);
+        ArrayList<String> str = new ArrayList<>();
+
+        for (int i = 0; i < removals; i++) {
+            str.add(input.readLine());
+        }
+
+        frontLineVertices = nSize;
+        backLineVertices = (nSize * (mSize - 1)) - 1;
+
+
 
 
         for (int i = 0; i < removals; i++) {
-            String[] str= input.readLine().split(" ");
-            int n = Integer.parseInt(str[0]);
-            int m = Integer.parseInt(str[1]);
+            String[] str2 = str.get(i).split(" ");
+            int n = Integer.parseInt(str2[0]);
+            int m = Integer.parseInt(str2[1]);
 
             removeWall(n, m);
 
@@ -52,7 +63,6 @@ public class PrisonWalls {
 
             graph.printGraph();
             System.out.println();*/
-
             if (findPath()) {
                 System.out.println(i+1);
                 System.exit(0);
@@ -67,9 +77,6 @@ public class PrisonWalls {
         if (counter.size() != mSize) {
             return false;
         }
-
-        frontLineVertices = nSize;
-        backLineVertices = (nSize * (mSize - 1)) - 1;
 
         visitedVertices = new boolean[nSize*mSize];
         for (int i = 0; i < frontLineVertices; i++) {
@@ -87,7 +94,6 @@ public class PrisonWalls {
         }
 
         visitedVertices[vertex] = true;
-        //System.out.println("visited vertex: " + vertex);
 
         for (int v :graph.undirectedGraph.get(vertex)) {
             if (!visitedVertices[v]) {
@@ -116,7 +122,7 @@ public class PrisonWalls {
 
 
     private void removeWall(int n, int m) {
-        matrix[m][n] = 1;
+
         if (!counter.contains(m)) {
             counter.add(m);
         }
@@ -124,7 +130,7 @@ public class PrisonWalls {
         int vertexNum = (nSize*m) + n;
 
 
-
+        matrix[m][n] = 1;
         if (n < nSize-1) {
             if (matrix[m][n+1] == 1) {
                 graph.addEdge(vertexNum, vertexNum+1);
@@ -139,6 +145,12 @@ public class PrisonWalls {
         }
 
 
+        if (m > 0) {
+            if (matrix[m-1][n] == 1) {
+                int vNum2 = (nSize * (m-1)) + n;
+                graph.addEdge(vertexNum, vNum2);
+            }
+        }
 
         if (m < mSize-1) {
             if (matrix[m+1][n] == 1) {
@@ -147,12 +159,7 @@ public class PrisonWalls {
             }
         }
 
-        if (m > 0) {
-            if (matrix[m-1][n] == 1) {
-                int vNum2 = (nSize * (m-1)) + n;
-                graph.addEdge(vertexNum, vNum2);
-            }
-        }
+
 
     }
 }
