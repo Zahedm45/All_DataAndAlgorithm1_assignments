@@ -8,22 +8,17 @@ import java.util.ArrayList;
 public class PrisonWalls {
 
     private int nSize, mSize;
-
-    //private ArrayList<Integer> counter;
     int counterSize;
     private boolean[][] matrix;
     private Graph graph;
     boolean isFirstDFS;
-    boolean[] allM;
-
+    boolean[] allRemovedMs;
     boolean[] visitedVertices;
     int backLineVertices, frontLineVertices;
 
     public static void main(String[] args) throws IOException {
       PrisonWalls prisonWalls = new PrisonWalls();
       prisonWalls.run();
-      //prisonWalls.printOut();
-
     }
 
 
@@ -32,8 +27,7 @@ public class PrisonWalls {
         nSize = Integer.parseInt(input.readLine());
         mSize = Integer.parseInt(input.readLine());
         matrix = new boolean[mSize][nSize];
-        //counter = new ArrayList<>();
-        allM = new boolean[mSize];
+        allRemovedMs = new boolean[mSize];
 
 
 
@@ -60,36 +54,18 @@ public class PrisonWalls {
                 System.out.println(i+1);
                 System.exit(0);
             }
-
-/*            System.out.println();
-            System.out.println("n: " + n + ", m: " + m);
-            printOut();
-            System.out.println();
-            System.out.println("Graph");
-
-            graph.printGraph();
-            System.out.println();*/
-/*            if (findPath()) {
-                System.out.println(i+1);
-                System.exit(0);
-            }
-
-            System.out.println();
-            System.out.println();*/
         }
     }
 
 
     private boolean removeWall(int n, int m) {
 
-        if (!allM[m]) {
-            allM[m] = true;
+        if (!allRemovedMs[m]) {
+            allRemovedMs[m] = true;
             counterSize++;
         }
 
-
         int vertexNum = (nSize*m) + n;
-
         boolean linkFound = false;
 
         matrix[m][n] = true;
@@ -130,7 +106,6 @@ public class PrisonWalls {
                 if (visitedVertices[vNum2]) {
                     linkFound = true;
                 }
-
             }
         }
 
@@ -142,24 +117,17 @@ public class PrisonWalls {
                 return findPath();
             }
         }
-
-
-
         return linkFound;
     }
 
 
 
-
-
     private boolean findPath() {
-
         for (int i = 0; i < frontLineVertices; i++) {
             if (dsf(i)) {
                 return true;
             }
         }
-
         return false;
     }
 
@@ -169,54 +137,16 @@ public class PrisonWalls {
         }
 
         visitedVertices[vertex] = true;
-
         for (int v :graph.undirectedGraph.get(vertex)) {
             if (!visitedVertices[v]) {
-                //System.out.println("visted: " + v);
                 if (dsf(v)) {
                     return true;
                 }
             }
         }
-
         return false;
     }
-
-
-    private void printOut() {
-        for (int i = 0; i < this.mSize; i++) {
-            for (int j = 0; j < this.nSize; j++) {
-                System.out.print(matrix[i][j] + " ");
-            }
-            System.out.println();
-        }
-
-    }
-
-
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 class Graph{
@@ -226,7 +156,6 @@ class Graph{
     public Graph(int vertex) {
         this.vertex = vertex;
         undirectedGraph = new ArrayList<>();
-
         for (int i = 0; i < vertex; i++) {
             undirectedGraph.add(new ArrayList<>());
         }
@@ -237,15 +166,4 @@ class Graph{
         undirectedGraph.get(vertexB).add(vertexA);
     }
 
-
-    public void printGraph() {
-        for (int i = 0; i < vertex; i++) {
-            System.out.print("Vertex: " + i);
-
-            for (int x : undirectedGraph.get(i)) {
-                System.out.print(" -> " + x);
-            }
-            System.out.println();
-        }
-    }
 }
