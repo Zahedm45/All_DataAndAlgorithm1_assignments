@@ -11,7 +11,7 @@ public class PrisonWalls {
     int counterSize;
     private boolean[][] matrix;
     private Graph graph;
-    boolean isFirstDFS;
+    boolean isFirstTimeDFS;
     boolean[] allRemovedMs;
     boolean[] visitedVertices;
     int backLineVertices, frontLineVertices;
@@ -41,7 +41,7 @@ public class PrisonWalls {
 
         frontLineVertices = nSize;
         backLineVertices = (nSize * (mSize - 1)) - 1;
-        isFirstDFS = true;
+        isFirstTimeDFS = true;
 
 
         visitedVertices = new boolean[nSize*mSize];
@@ -111,9 +111,9 @@ public class PrisonWalls {
 
 
         if (counterSize >= mSize) {
-            if (linkFound || isFirstDFS) {
+            if (linkFound || isFirstTimeDFS) {
                 visitedVertices = new boolean[nSize*mSize];
-                isFirstDFS = false;
+                isFirstTimeDFS = false;
                 return findPath();
             }
         }
@@ -124,14 +124,14 @@ public class PrisonWalls {
 
     private boolean findPath() {
         for (int i = 0; i < frontLineVertices; i++) {
-            if (dsf(i)) {
+            if (dfs(i)) {
                 return true;
             }
         }
         return false;
     }
 
-    private boolean dsf(int vertex) {
+    private boolean dfs(int vertex) {
         if (vertex > backLineVertices) {
             return true;
         }
@@ -139,7 +139,7 @@ public class PrisonWalls {
         visitedVertices[vertex] = true;
         for (int v :graph.undirectedGraph.get(vertex)) {
             if (!visitedVertices[v]) {
-                if (dsf(v)) {
+                if (dfs(v)) {
                     return true;
                 }
             }
